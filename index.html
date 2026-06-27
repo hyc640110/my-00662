@@ -89,7 +89,7 @@ canvas{display:block;width:100%;border-radius:6px}
     <div>
       <label>00670L 股價 <span id="p670time" style="color:#4caf50;font-size:9px"></span></label>
       <div class="price-row">
-        <input type="text" id="price670" value="200.0" onblur="applyPrice('price670','price670val')" style="color:#4fc3f7">
+        <input type="text" id="price670" value="230.0" onblur="applyPrice('price670','price670val')" style="color:#4fc3f7">
         <button class="refresh-btn" id="btn670" onclick="fetchPrice670()" title="更新股價">🔄</button>
       </div>
       <div class="info-row">市值 <span id="val670" style="color:#4fc3f7">-</span></div>
@@ -105,7 +105,7 @@ canvas{display:block;width:100%;border-radius:6px}
     <div>
       <label>00662 股價 <span id="p662time" style="color:#4caf50;font-size:9px"></span></label>
       <div class="price-row">
-        <input type="text" id="price00662" value="120.0" onblur="applyPrice('price00662','price662val')" style="color:#5c6bc0">
+        <input type="text" id="price00662" value="125.0" onblur="applyPrice('price00662','price662val')" style="color:#5c6bc0">
         <button class="refresh-btn" id="btn662" style="background:rgba(92,107,192,0.2);border-color:rgba(92,107,192,0.4);color:#5c6bc0" onclick="fetchPrice00662()" title="更新股價">🔄</button>
       </div>
       <div class="info-row">市值 <span id="val00662" style="color:#5c6bc0">-</span></div>
@@ -342,11 +342,11 @@ canvas{display:block;width:100%;border-radius:6px}
 <p class="footer">🚀 雲端自動版：登入或開啟網頁時會全自動更新最新股價並上傳。</p>
 
 <script>
-var STORAGE_KEY='portfolio-tech-v2';
+var STORAGE_KEY='portfolio-tech-v3';
 var CONF_KEY='portfolio-sync-conf-tech';
 var addOnEnabled=true;
 var addOnSource='cash';
-var price670val=200.0, price662val=120.0, priceBondval=48.15;
+var price670val=230.0, price662val=125.0, priceBondval=48.15;
 var isCloudSyncing=false;
 
 function fmt(v){
@@ -357,8 +357,7 @@ function fmt(v){
 }
 
 async function autoRefreshAllPrices() {
-  g('storageMsg').textContent = '⚡ 正在自動抓取今日即時股價...';
-  isCloudSyncing = true;
+  if(g('storageMsg')) g('storageMsg').textContent = '⚡ 正在自動抓取今日即時股價...';
   try {
     await Promise.all([
       fetchPriceSilent('00670L.TW', 'price670', 'price670val', 'p670time', 'btn670'),
@@ -366,7 +365,6 @@ async function autoRefreshAllPrices() {
       fetchPriceSilent('00865B.TW', 'priceBond', 'priceBondval', 'p865time', 'btn865')
     ]);
   } catch(e) {}
-  isCloudSyncing = false;
   updateAndSync();
   showMsg('storageMsg', '✅ 今日最新股價已自動更新完畢', 3000);
 }
@@ -569,7 +567,7 @@ function update(){
   } else { ld.style.display='none'; }
 
   var chartData=[];
-  for(var i=0;i<=10;i++){
+  for(var i=0; i<=10; i++){
     var v670=init670*Math.pow(1+rate670/100,i); 
     var v662=init662*Math.pow(1+rate662/100,i); 
     var vBond=initBond*Math.pow(1+rateBond/100,i);
@@ -586,7 +584,7 @@ function update(){
   var cards=[
     {label:'五年後（含加碼）',val:fmt(five.total),sub:'+'+fmt(five.total-totalAssets),color:'#81d4fa',detail:'複利滾動中'},
     {label:'十年後（含加碼）',val:fmt(final.total),sub:'+'+fmt(final.total-totalCost),color:'#ce93d8',detail:'長期複利成效'},
-    {label:'組合 Beta',val:beta,sub:beta>1.2?'積極型':'穩健型',color:#a5d6a7,detail:'00670L×1.9＋00662×1.0＋00865B×0.05'}
+    {label:'組合 Beta',val:beta,sub:beta>1.2?'積極型':'穩健型',color:'#a5d6a7',detail:'00670L×1.9＋00662×1.0＋00865B×0.05'}
   ];
   var rc=g('resultCards'); rc.innerHTML='';
   cards.forEach(function(c){
@@ -738,7 +736,7 @@ function fetchPrice670(){ fetchPriceSilent('00670L.TW','price670','price670val',
 function fetchPrice00662(){ fetchPriceSilent('00662.TW','price00662','price662val','p662time','btn662').then(update); }
 function fetchPriceBond(){ fetchPriceSilent('00865B.TW','priceBond','priceBondval','p865time','btn865').then(update); }
 
-function showMsg(id, text, ms){ var el=g(id); el.textContent=text; setTimeout(function(){ el.textContent=''; }, ms||3000); }
+function showMsg(id, text, ms){ var el=g(id); if(el) el.textContent=text; setTimeout(function(){ if(g(id)) g(id).textContent=''; }, ms||3000); }
 
 function saveSyncConfig() {
   var conf = { url: g('fbUrl').value.trim(), key: g('fbKey').value.trim() };
@@ -754,7 +752,8 @@ function updateAndSync() {
 
   clearTimeout(window.syncTimer);
   window.syncTimer = setTimeout(async function() {
-    g('cloudStatus').textContent = '⚡ 同步中...';
+    var st = g('cloudStatus');
+    if(st) st.textContent = '⚡ 同步中...';
     try {
       var data = getSettings();
       var res = await fetch(conf.url + conf.key + '.json', {
@@ -762,9 +761,9 @@ function updateAndSync() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      if(res.ok) g('cloudStatus').textContent = '✅ 雲端已同步';
-      else g('cloudStatus').textContent = '❌ 同步失敗';
-    } catch(e) { g('cloudStatus').textContent = '❌ 網路錯誤'; }
+      if(res.ok && g('cloudStatus')) g('cloudStatus').textContent = '✅ 雲端已同步';
+      else if(g('cloudStatus')) g('cloudStatus').textContent = '❌ 同步失敗';
+    } catch(e) { if(g('cloudStatus')) g('cloudStatus').textContent = '❌ 網路錯誤'; }
   }, 1000);
 }
 
@@ -782,14 +781,13 @@ async function loadFromCloud() {
       if(cloudData) {
         applySettings(cloudData);
         g('cloudStatus').textContent = '✅ 雲端連線成功';
-        autoRefreshAllPrices();
       } else {
         g('cloudStatus').textContent = '💡 雲端無資料 (已初始化)';
-        isCloudSyncing = false;
-        autoRefreshAllPrices();
       }
     } else { throw new Error(); }
-  } catch(e) { g('cloudStatus').textContent = '❌ 連線失敗'; isCloudSyncing = false; }
+  } catch(e) { g('cloudStatus').textContent = '❌ 連線失敗'; }
+  isCloudSyncing = false;
+  autoRefreshAllPrices();
 }
 
 function getSettings(){
@@ -854,9 +852,9 @@ try{
     var conf = JSON.parse(confStr);
     g('fbUrl').value = conf.url || '';
     g('fbKey').value = conf.key || '';
-    if(conf.url && conf.key) { loadFromCloud(); } else { autoRefreshAllPrices(); }
-  } else { autoRefreshAllPrices(); }
-}catch(e){ autoRefreshAllPrices(); }
+    if(conf.url && conf.key) { loadFromCloud(); } else { update(); autoRefreshAllPrices(); }
+  } else { update(); autoRefreshAllPrices(); }
+}catch(e){ update(); autoRefreshAllPrices(); }
 
 window.addEventListener('resize', function(){ update(); });
 </script>
