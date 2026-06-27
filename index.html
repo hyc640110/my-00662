@@ -90,7 +90,7 @@ canvas{display:block;width:100%;border-radius:6px}
     <div>
       <label>00670L 股價 <span id="p670time" style="color:#4caf50;font-size:9px"></span></label>
       <div class="price-row">
-        <input type="text" id="price670" value="230.0" onblur="applyPrice('price670','price670val')" style="color:#4fc3f7">
+        <input type="text" id="price670" value="200.0" onblur="applyPrice('price670','price670val')" style="color:#4fc3f7">
         <button class="refresh-btn" id="btn670" onclick="fetchPrice670()" title="更新股價">🔄</button>
       </div>
       <div class="info-row">市值 <span id="val670" style="color:#4fc3f7">-</span></div>
@@ -106,7 +106,7 @@ canvas{display:block;width:100%;border-radius:6px}
     <div>
       <label>00662 股價 <span id="p662time" style="color:#4caf50;font-size:9px"></span></label>
       <div class="price-row">
-        <input type="text" id="price00662" value="125.0" onblur="applyPrice('price00662','price662val')" style="color:#5c6bc0">
+        <input type="text" id="price00662" value="120.0" onblur="applyPrice('price00662','price662val')" style="color:#5c6bc0">
         <button class="refresh-btn" id="btn662" style="background:rgba(92,107,192,0.2);border-color:rgba(92,107,192,0.4);color:#5c6bc0" onclick="fetchPrice00662()" title="更新股價">🔄</button>
       </div>
       <div class="info-row">市值 <span id="val00662" style="color:#5c6bc0">-</span></div>
@@ -122,7 +122,7 @@ canvas{display:block;width:100%;border-radius:6px}
     <div>
       <label>00631L 股價 <span id="p631time" style="color:#4caf50;font-size:9px"></span></label>
       <div class="price-row">
-        <input type="text" id="price631" value="38.0" onblur="applyPrice('price631','price631val')" style="color:#00e676">
+        <input type="text" id="price631" value="35.3" onblur="applyPrice('price631','price631val')" style="color:#00e676">
         <button class="refresh-btn" id="btn631" style="background:rgba(0,230,118,0.2);border-color:rgba(0,230,118,0.4);color:#00e676" onclick="fetchPrice631()" title="更新股價">🔄</button>
       </div>
       <div class="info-row">市值 <span id="val631" style="color:#00e676">-</span></div>
@@ -138,7 +138,7 @@ canvas{display:block;width:100%;border-radius:6px}
     <div>
       <label>0050 股價 <span id="p50time" style="color:#4caf50;font-size:9px"></span></label>
       <div class="price-row">
-        <input type="text" id="price0050" value="110.0" onblur="applyPrice('price0050','price50val')" style="color:#e91e63">
+        <input type="text" id="price0050" value="103.0" onblur="applyPrice('price0050','price50val')" style="color:#e91e63">
         <button class="refresh-btn" id="btn50" style="background:rgba(233,30,99,0.2);border-color:rgba(233,30,99,0.4);color:#e91e63" onclick="fetchPrice0050()" title="更新股價">🔄</button>
       </div>
       <div class="info-row">市值 <span id="val0050" style="color:#e91e63">-</span></div>
@@ -375,11 +375,11 @@ canvas{display:block;width:100%;border-radius:6px}
 <p class="footer">🚀 雲端自動版：登入或開啟網頁時會全自動更新最新股價並上傳。</p>
 
 <script>
-var STORAGE_KEY='portfolio-tech-v7';
+var STORAGE_KEY='portfolio-tech-v8';
 var CONF_KEY='portfolio-sync-conf-tech';
 var addOnEnabled=true;
 var addOnSource='cash';
-var price670val=230.0, price662val=125.0, price631val=38.16, price50val=103.1, priceBondval=48.15;
+var price670val=200.0, price662val=120.0, price631val=35.26, price50val=103.1, priceBondval=48.15;
 var isCloudSyncing=false;
 
 function fmt(v){
@@ -395,7 +395,7 @@ async function autoRefreshAllPrices() {
     await Promise.all([
       fetchPriceSilent('00670L.TW', 'price670', 'price670val', 'p670time', 'btn670'),
       fetchPriceSilent('00662.TWO', 'price00662', 'price662val', 'p662time', 'btn662'),
-      fetchPriceSilent('00631L.TWO', 'price631', 'price631val', 'p631time', 'btn631'),
+      fetchPriceSilent('00631L.TW', 'price631', 'price631val', 'p631time', 'btn631'),
       fetchPriceSilent('0050.TW', 'price0050', 'price50val', 'p50time', 'btn50'),
       fetchPriceSilent('00865B.TW', 'priceBond', 'priceBondval', 'p865time', 'btn865')
     ]);
@@ -406,7 +406,6 @@ async function autoRefreshAllPrices() {
 
 async function fetchPriceSilent(ticker, inputId, varName, timeId, btnId) {
   var btn = g(btnId); if(btn) btn.textContent = '⏳';
-  // 建立代理陣列進行多重防禦分流，解決網址截斷問題
   var urls = [
     `https://api.allorigins.win/get?url=${encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + ticker)}`,
     `https://api.allorigins.win/get?url=${encodeURIComponent('https://query2.finance.yahoo.com/v8/finance/chart/' + ticker)}`
@@ -427,7 +426,7 @@ async function fetchPriceSilent(ticker, inputId, varName, timeId, btnId) {
         else if (varName === 'price50val') price50val = price;
         else priceBondval = price;
         var now = new Date(); g(timeId).textContent = '● ' + now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + ' 更新';
-        break; // 成功抓到隨即跳出
+        break;
       }
     } catch (e) {}
   }
@@ -773,7 +772,7 @@ function drawChart(data, totalAssets, addOnEnabled, addOnSource, addOnAmt, addOn
 
 function fetchPrice670(){ fetchPriceSilent('00670L.TW','price670','price670val','p670time','btn670').then(update); }
 function fetchPrice00662(){ fetchPriceSilent('00662.TWO','price00662','price662val','p662time','btn662').then(update); }
-function fetchPrice631(){ fetchPriceSilent('00631L.TWO','price631','price631val','p631time','btn631').then(update); }
+function fetchPrice631(){ fetchPriceSilent('00631L.TW','price631','price631val','p631time','btn631').then(update); }
 function fetchPrice0050(){ fetchPriceSilent('0050.TW','price0050','price50val','p50time','btn50').then(update); }
 function fetchPriceBond(){ fetchPriceSilent('00865B.TW','priceBond','priceBondval','p865time','btn865').then(update); }
 
