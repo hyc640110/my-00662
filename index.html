@@ -19,7 +19,7 @@ h1{font-size:19px;font-weight:800;text-align:center;color:#fff;margin-bottom:4px
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
 .grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px}
-.grid5{display:grid;grid-template-columns:repeat(5, 1fr);gap:4px}
+.grid6{display:grid;grid-template-columns:repeat(6, 1fr);gap:4px}
 label{font-size:10px;color:#78909c;display:block;margin-bottom:5px}
 input[type=text],input[type=number],input[type=password]{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:7px 10px;color:#fff;font-size:14px;font-weight:700;outline:none}
 input[type=range]{width:100%;accent-color:#4fc3f7;cursor:pointer}
@@ -97,6 +97,22 @@ canvas{display:block;width:100%;border-radius:6px}
     </div>
   </div>
 
+  <!-- 00662 -->
+  <div class="grid2" style="margin-bottom:10px">
+    <div>
+      <label>00662 持股數 (NDX原股)</label>
+      <input type="number" id="shares00662" value="10000" oninput="updateAndSync()">
+    </div>
+    <div>
+      <label>00662 股價 <span id="p662time" style="color:#4caf50;font-size:9px"></span></label>
+      <div class="price-row">
+        <input type="text" id="price00662" value="125.0" onblur="applyPrice('price00662','price662val')" style="color:#5c6bc0">
+        <button class="refresh-btn" id="btn662" style="background:rgba(92,107,192,0.2);border-color:rgba(92,107,192,0.4);color:#5c6bc0" onclick="fetchPrice00662()" title="更新股價">🔄</button>
+      </div>
+      <div class="info-row">市值 <span id="val00662" style="color:#5c6bc0">-</span></div>
+    </div>
+  </div>
+
   <!-- 00631L -->
   <div class="grid2" style="margin-bottom:10px">
     <div>
@@ -113,19 +129,19 @@ canvas{display:block;width:100%;border-radius:6px}
     </div>
   </div>
 
-  <!-- 00662 -->
+  <!-- 0050 -->
   <div class="grid2" style="margin-bottom:10px">
     <div>
-      <label>00662 持股數 (NDX原股)</label>
-      <input type="number" id="shares00662" value="10000" oninput="updateAndSync()">
+      <label>0050 持股數 (台股大盤)</label>
+      <input type="number" id="shares0050" value="5000" oninput="updateAndSync()">
     </div>
     <div>
-      <label>00662 股價 <span id="p662time" style="color:#4caf50;font-size:9px"></span></label>
+      <label>0050 股價 <span id="p50time" style="color:#4caf50;font-size:9px"></span></label>
       <div class="price-row">
-        <input type="text" id="price00662" value="125.0" onblur="applyPrice('price00662','price662val')" style="color:#5c6bc0">
-        <button class="refresh-btn" id="btn662" style="background:rgba(92,107,192,0.2);border-color:rgba(92,107,192,0.4);color:#5c6bc0" onclick="fetchPrice00662()" title="更新股價">🔄</button>
+        <input type="text" id="price0050" value="150.0" onblur="applyPrice('price0050','price50val')" style="color:#e91e63">
+        <button class="refresh-btn" id="btn50" style="background:rgba(233,30,99,0.2);border-color:rgba(233,30,99,0.4);color:#e91e63" onclick="fetchPrice0050()" title="更新股價">🔄</button>
       </div>
-      <div class="info-row">市值 <span id="val00662" style="color:#5c6bc0">-</span></div>
+      <div class="info-row">市值 <span id="val0050" style="color:#e91e63">-</span></div>
     </div>
   </div>
 
@@ -172,7 +188,7 @@ canvas{display:block;width:100%;border-radius:6px}
   </div>
 </div>
 
-<!-- 借款設定 -->
+<!-- 房貸設定 -->
 <div class="card card-orange">
   <p class="section-title" style="color:#ffb74d">🏠 房貸借款設定</p>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
@@ -199,7 +215,7 @@ canvas{display:block;width:100%;border-radius:6px}
     </div>
     <div id="loanSummary" style="font-size:10px;color:#546e7a;display:flex;flex-direction:column;justify-content:center;gap:4px"></div>
   </div>
-  <div id="loanDetail" style="none;margin-top:10px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;font-size:10px;color:#78909c"></div>
+  <div id="loanDetail" style="display:none;margin-top:10px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;font-size:10px;color:#78909c"></div>
 </div>
 
 <!-- 曝險分析 -->
@@ -207,7 +223,7 @@ canvas{display:block;width:100%;border-radius:6px}
   <p class="section-title" style="color:#ef9a9a">⚠️ 曝險分析</p>
   <div style="font-size:10px;color:#78909c;margin-bottom:8px">目前曝險比例（占總資產）</div>
   <div class="bar-container" id="expBar"></div>
-  <div class="grid5" id="expCards" style="margin-bottom:10px"></div>
+  <div class="grid6" id="expCards" style="margin-bottom:10px"></div>
   
   <div id="combinedDefenseCard" style="margin-bottom:12px;padding:10px;background:rgba(255,213,79,0.06);border:1px solid rgba(255,213,79,0.2);border-radius:8px;text-align:center;font-size:11px;font-weight:600;"></div>
   
@@ -215,7 +231,7 @@ canvas{display:block;width:100%;border-radius:6px}
   <div id="loanExpCards"></div>
   <div style="font-size:10px;color:#78909c;margin-bottom:8px;margin-top:10px">最大損失情境</div>
   <div class="grid3" id="lossCards"></div>
-  <div style="font-size:10px;color:#546e7a;text-align:center;margin-top:6px">※ 槓桿正2 ETF以 Beta 1.9；00662以 Beta 1.0；00865B以 Beta 0.05 計算</div>
+  <div style="font-size:10px;color:#546e7a;text-align:center;margin-top:6px">※ 槓桿正2 ETF以 Beta 1.9；00662/0050以 Beta 1.0；00865B以 Beta 0.05 計算</div>
 </div>
 
 <!-- 年化＋配置 -->
@@ -225,7 +241,7 @@ canvas{display:block;width:100%;border-radius:6px}
       <p class="section-title" style="color:#90caf9">📈 模擬預期年化報酬率</p>
       <div class="slider-row">
         <div class="slider-label">
-          <span style="font-size:11px;color:#4fc3f7;font-weight:600">00670L / 00631L</span>
+          <span style="font-size:11px;color:#4fc3f7;font-weight:600">正2 部位 (槓桿)</span>
           <span id="rate670Label" class="slider-val" style="background:rgba(79,195,247,0.15);border:1px solid rgba(79,195,247,0.4);color:#4fc3f7">15%</span>
         </div>
         <input type="range" id="rate670" min="6" max="26" value="15" oninput="updateSlider('rate670')">
@@ -233,7 +249,7 @@ canvas{display:block;width:100%;border-radius:6px}
       </div>
       <div class="slider-row">
         <div class="slider-label">
-          <span style="font-size:11px;color:#5c6bc0;font-weight:600">00662</span>
+          <span style="font-size:11px;color:#5c6bc0;font-weight:600">大盤原股 (662/50)</span>
           <span id="rate662Label" class="slider-val" style="background:rgba(92,107,192,0.15);border:1px solid rgba(92,107,192,0.4);color:#5c6bc0">10%</span>
         </div>
         <input type="range" id="rate662" min="4" max="18" value="10" oninput="updateSlider('rate662')">
@@ -241,7 +257,7 @@ canvas{display:block;width:100%;border-radius:6px}
       </div>
       <div class="slider-row">
         <div class="slider-label">
-          <span style="font-size:11px;color:#a5d6a7;font-weight:600">00865B</span>
+          <span style="font-size:11px;color:#a5d6a7;font-weight:600">00865B 美債</span>
           <span id="rateBondLabel" class="slider-val" style="background:rgba(165,214,167,0.15);border:1px solid rgba(165,214,167,0.4);color:#a5d6a7">4.5%</span>
         </div>
         <input type="range" id="rateBond" min="2" max="8" step="0.5" value="4.5" oninput="updateSlider('rateBond')">
@@ -252,7 +268,7 @@ canvas{display:block;width:100%;border-radius:6px}
       <p class="section-title" style="color:#ce93d8">⚖️ 模擬預期配置目標</p>
       <div class="slider-row">
         <div class="slider-label">
-          <span style="font-size:11px;color:#4fc3f7;font-weight:600">00670L / 00631L</span>
+          <span style="font-size:11px;color:#4fc3f7;font-weight:600">正2 部位總比重</span>
           <span id="pct670Label" class="slider-val" style="background:rgba(79,195,247,0.15);border:1px solid rgba(79,195,247,0.4);color:#4fc3f7">45%</span>
         </div>
         <input type="range" id="pct670" min="10" max="80" step="5" value="45" oninput="updateSlider('pct670')">
@@ -260,7 +276,7 @@ canvas{display:block;width:100%;border-radius:6px}
       </div>
       <div class="slider-row">
         <div class="slider-label">
-          <span style="font-size:11px;color:#5c6bc0;font-weight:600">00662</span>
+          <span style="font-size:11px;color:#5c6bc0;font-weight:600">大盤原股總比重</span>
           <span id="pct662Label" class="slider-val" style="background:rgba(92,107,192,0.15);border:1px solid rgba(92,107,192,0.4);color:#5c6bc0">20%</span>
         </div>
         <input type="range" id="pct662" min="0" max="60" step="5" value="20" oninput="updateSlider('pct662')">
@@ -268,7 +284,7 @@ canvas{display:block;width:100%;border-radius:6px}
       </div>
       <div class="slider-row">
         <div class="slider-label">
-          <span style="font-size:11px;color:#a5d6a7;font-weight:600">00865B</span>
+          <span style="font-size:11px;color:#a5d6a7;font-weight:600">00865B 美債比重</span>
           <span id="pctBondLabel" class="slider-val" style="background:rgba(165,214,167,0.15);border:1px solid rgba(165,214,167,0.4);color:#a5d6a7">20%</span>
         </div>
         <input type="range" id="pctBond" min="0" max="40" step="5" value="20" oninput="updateSlider('pctBond')">
@@ -283,7 +299,7 @@ canvas{display:block;width:100%;border-radius:6px}
 <div class="card" style="max-width:640px;margin:0 auto 12px">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
     <div style="flex:1">
-      <div style="font-size:10px;color:#546e7a;margin-bottom:5px">模擬再平衡分佈 (正2合併計算)</div>
+      <div style="font-size:10px;color:#546e7a;margin-bottom:5px">模擬再平衡分佈 (大類別合併計算)</div>
       <div class="bar-container" id="allocBar"></div>
       <div id="allocLabels" style="display:flex;gap:10px;font-size:10px;flex-wrap:wrap"></div>
     </div>
@@ -346,7 +362,7 @@ canvas{display:block;width:100%;border-radius:6px}
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#4fc3f7"></div>正2總額 (670L+631L)</div>
     <div class="legend-item"><div class="legend-dot" style="background:#ff9800"></div>加碼部位</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#5c6bc0"></div>00662</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#5c6bc0"></div>原股部位 (662+50)</div>
     <div class="legend-item"><div class="legend-dot" style="background:#a5d6a7"></div>00865B</div>
     <div class="legend-item"><div class="legend-dot" style="background:#ffd54f"></div>現金</div>
     <div class="legend-item"><div class="legend-dot-dash"></div>投入成本線</div>
@@ -359,11 +375,11 @@ canvas{display:block;width:100%;border-radius:6px}
 <p class="footer">🚀 雲端自動版：登入或開啟網頁時會全自動更新最新股價並上傳。</p>
 
 <script>
-var STORAGE_KEY='portfolio-tech-v4';
+var STORAGE_KEY='portfolio-tech-v5';
 var CONF_KEY='portfolio-sync-conf-tech';
 var addOnEnabled=true;
 var addOnSource='cash';
-var price670val=230.0, price631val=210.0, price662val=125.0, priceBondval=48.15;
+var price670val=230.0, price662val=125.0, price631val=210.0, price50val=150.0, priceBondval=48.15;
 var isCloudSyncing=false;
 
 function fmt(v){
@@ -378,8 +394,9 @@ async function autoRefreshAllPrices() {
   try {
     await Promise.all([
       fetchPriceSilent('00670L.TW', 'price670', 'price670val', 'p670time', 'btn670'),
-      fetchPriceSilent('00631L.TW', 'price631', 'price631val', 'p631time', 'btn631'),
       fetchPriceSilent('00662.TWO', 'price00662', 'price662val', 'p662time', 'btn662'),
+      fetchPriceSilent('00631L.TW', 'price631', 'price631val', 'p631time', 'btn631'),
+      fetchPriceSilent('0050.TW', 'price0050', 'price50val', 'p50time', 'btn50'),
       fetchPriceSilent('00865B.TW', 'priceBond', 'priceBondval', 'p865time', 'btn865')
     ]);
   } catch(e) {}
@@ -398,8 +415,9 @@ async function fetchPriceSilent(ticker, inputId, varName, timeId, btnId) {
     if (price) {
       g(inputId).value = price;
       if (varName === 'price670val') price670val = price; 
-      else if (varName === 'price631val') price631val = price;
       else if (varName === 'price662val') price662val = price;
+      else if (varName === 'price631val') price631val = price;
+      else if (varName === 'price50val') price50val = price;
       else priceBondval = price;
       var now = new Date(); g(timeId).textContent = '● ' + now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + ' 更新';
     }
@@ -412,8 +430,9 @@ async function fetchPriceSilent(ticker, inputId, varName, timeId, btnId) {
       if (priceAlt) {
         g(inputId).value = priceAlt;
         if (varName === 'price670val') price670val = priceAlt;
-        else if (varName === 'price631val') price631val = priceAlt;
         else if (varName === 'price662val') price662val = priceAlt;
+        else if (varName === 'price631val') price631val = priceAlt;
+        else if (varName === 'price50val') price50val = priceAlt;
         else priceBondval = priceAlt;
         var now = new Date(); g(timeId).textContent = '● ' + now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + ' 更新';
       }
@@ -429,12 +448,13 @@ function applyPrice(inputId, varName){
   var v=parseFloat(g(inputId).value);
   if(!isNaN(v)&&v>0){
     if(varName==='price670val') price670val=v;
-    else if(varName==='price631val') price631val=v;
     else if(varName==='price662val') price662val=v;
+    else if(varName==='price631val') price631val=v;
+    else if(varName==='price50val') price50val=v;
     else priceBondval=v;
     updateAndSync();
   } else {
-    g(inputId).value = (varName==='price670val') ? price670val : ((varName==='price631val') ? price631val : ((varName==='price662val') ? price662val : priceBondval));
+    g(inputId).value = (varName==='price670val') ? price670val : ((varName==='price662val') ? price662val : ((varName==='price631val') ? price631val : ((varName==='price50val') ? price50val : priceBondval)));
   }
 }
 
@@ -495,21 +515,21 @@ function setSource(src){
 }
 
 function update(){
-  var shares=val('shares'), shares631=val('shares631'), shares00662=val('shares00662'), sharesBond=val('sharesBond');
+  var shares=val('shares'), shares631=val('shares631'), shares00662=val('shares00662'), shares0050=val('shares0050'), sharesBond=val('sharesBond');
   var cash=val('cash')*10000; var loan=val('loanAmount')*10000;
   var loanRate=parseFloat(g('loanRate').value)||2.2;
   var rate670=val('rate670'), rate662=val('rate662'), rateBond=val('rateBond');
   var pct670=val('pct670'), pct662=val('pct662'), pctBond=val('pctBond'); var pctCash=Math.max(0,100-pct670-pct662-pctBond);
   var addOnAmt=val('addOnAmt')*10000; var addOnDrop=val('addOnDrop'), addOnYear=val('addOnYear');
 
-  var etf670Val=price670val*shares; var etf631Val=price631val*shares631; var etf662Val=price662val*shares00662; var etfBondVal=priceBondval*sharesBond;
-  var totalAssets=etf670Val+etf631Val+etf662Val+etfBondVal+cash; var netAssets=totalAssets-loan;
+  var etf670Val=price670val*shares; var etf662Val=price662val*shares00662; var etf631Val=price631val*shares631; var etf50Val=price50val*shares0050; var etfBondVal=priceBondval*sharesBond;
+  var totalAssets=etf670Val+etf631Val+etf662Val+etf50Val+etfBondVal+cash; var netAssets=totalAssets-loan;
 
-  g('val670').textContent=fmt(etf670Val); g('val631').textContent=fmt(etf631Val); g('val00662').textContent=fmt(etf662Val); g('valBond').textContent=fmt(etfBondVal);
+  g('val670').textContent=fmt(etf670Val); g('val00662').textContent=fmt(etf662Val); g('val631').textContent=fmt(etf631Val); g('val0050').textContent=fmt(etf50Val); g('valBond').textContent=fmt(etfBondVal);
   g('totalAssets').textContent=fmt(totalAssets);
-  g('assetBreakdown').textContent='670L '+fmt(etf670Val)+' + 00631L '+fmt(etf631Val)+' + 00662 '+fmt(etf662Val)+' + 865B '+fmt(etfBondVal)+' + 現金 '+fmt(cash);
+  g('assetBreakdown').textContent='670L '+fmt(etf670Val)+' + 00662 '+fmt(etf662Val)+' + 00631L '+fmt(etf631Val)+' + 0050 '+fmt(etf50Val)+' + 865B '+fmt(etfBondVal)+' + 現金 '+fmt(cash);
 
-  var init2X=totalAssets*pct670/100; var init662=totalAssets*pct662/100; var initBond=totalAssets*pctBond/100; var initCash=totalAssets*pctCash/100;
+  var init2X=totalAssets*pct670/100; var init1X=totalAssets*pct662/100; var initBond=totalAssets*pctBond/100; var initCash=totalAssets*pctCash/100;
   var beta=(pct670/100*1.9 + pct662/100*1.0 + pctBond/100*0.05).toFixed(2);
 
   g('cashPctInfo').textContent='現金自動：'+pctCash+'%（'+fmt(initCash)+'）';
@@ -517,16 +537,17 @@ function update(){
   g('betaType').textContent=beta>1.4?'積極型':beta>0.8?'穩健型':'保守型'; g('betaType').style.color=beta>1.4?'#ff8a65':'#a5d6a7';
 
   var r670Pct = totalAssets > 0 ? (etf670Val / totalAssets * 100) : 0;
-  var r631Pct = totalAssets > 0 ? (etf631Val / totalAssets * 100) : 0;
   var r662Pct = totalAssets > 0 ? (etf662Val / totalAssets * 100) : 0;
+  var r631Pct = totalAssets > 0 ? (etf631Val / totalAssets * 100) : 0;
+  var r50Pct = totalAssets > 0 ? (etf50Val / totalAssets * 100) : 0;
   var rBondPct = totalAssets > 0 ? (etfBondVal / totalAssets * 100) : 0;
   var rCashPct = totalAssets > 0 ? (cash / totalAssets * 100) : 0;
-  var realBeta = ((r670Pct + r631Pct) / 100 * 1.9 + r662Pct / 100 * 1.0 + rBondPct / 100 * 0.05).toFixed(2);
+  var realBeta = ((r670Pct + r631Pct) / 100 * 1.9 + (r662Pct + r50Pct) / 100 * 1.0 + rBondPct / 100 * 0.05).toFixed(2);
   
   g('realEffectiveBeta').textContent = `真實組合Beta: ${realBeta}`;
   
   var rBar = g('realAllocBar'); rBar.innerHTML = '';
-  var rawAllocArr = [[r670Pct, '#4fc3f7'], [r631Pct, '#00e676'], [r662Pct, '#5c6bc0'], [rBondPct, '#a5d6a7'], [rCashPct, '#ffd54f']];
+  var rawAllocArr = [[r670Pct, '#4fc3f7'], [r662Pct, '#5c6bc0'], [r631Pct, '#00e676'], [r50Pct, '#e91e63'], [rBondPct, '#a5d6a7'], [rCashPct, '#ffd54f']];
   var activeAlloc = rawAllocArr.filter(function(item){ return item[0] > 0; });
   
   activeAlloc.forEach(function(item, idx){
@@ -538,13 +559,14 @@ function update(){
   
   g('realAllocLabels').innerHTML = 
     `<span style="color:#4fc3f7">00670L: ${r670Pct.toFixed(1)}%</span> ` +
-    `<span style="color:#00e676">00631L: ${r631Pct.toFixed(1)}%</span> ` +
     `<span style="color:#5c6bc0">00662: ${r662Pct.toFixed(1)}%</span> ` +
+    `<span style="color:#00e676">00631L: ${r631Pct.toFixed(1)}%</span> ` +
+    `<span style="color:#e91e63">0050: ${r50Pct.toFixed(1)}%</span> ` +
     `<span style="color:#a5d6a7">00865B: ${rBondPct.toFixed(1)}%</span> ` +
     `<span style="color:#ffd54f">現金: ${rCashPct.toFixed(1)}%</span>`;
 
   var triggerPrice=(price670val*(1-addOnDrop/100)).toFixed(2);
-  var dl=g('dropLabel'); if(dl) dl.textContent='觸發跌幅（以00670L約≈'+triggerPrice+'元為準）';
+  var dl=g('dropLabel'); if(dl) dl.textContent = '觸發跌幅（以00670L約≈'+triggerPrice+'元為準）';
 
   var bar=g('allocBar'); bar.innerHTML='';
   var simAllocArr = [[pct670,'#4fc3f7'],[pct662,'#5c6bc0'],[pctBond,'#a5d6a7'],[pctCash,'#ffd54f']];
@@ -557,7 +579,7 @@ function update(){
   });
   
   var labels=g('allocLabels'); labels.innerHTML='';
-  [['正2部位 '+pct670+'%','#4fc3f7',init2X],['00662 '+pct662+'%','#5c6bc0',init662],['00865B '+pctBond+'%','#a5d6a7',initBond],['現金 '+pctCash+'%','#ffd54f',initCash]].forEach(function(x){
+  [['正2部位 '+pct670+'%','#4fc3f7',init2X],['原股部位 '+pct662+'%','#5c6bc0',init1X],['00865B '+pctBond+'%','#a5d6a7',initBond],['現金 '+pctCash+'%','#ffd54f',initCash]].forEach(function(x){
     labels.innerHTML+='<span style="color:'+x[1]+'">'+x[0]+' <span style="color:#78909c">('+fmt(x[2])+')</span></span> ';
   });
 
@@ -592,12 +614,12 @@ function update(){
   var chartData=[];
   for(var i=0; i<=10; i++){
     var v2X=init2X*Math.pow(1+rate670/100,i); 
-    var v662=init662*Math.pow(1+rate662/100,i); 
+    var v1X=init1X*Math.pow(1+rate662/100,i); 
     var vBond=initBond*Math.pow(1+rateBond/100,i);
     var cashAfter=addOnEnabled&&addOnSource=='cash'?Math.max(0,initCash-addOnAmt):initCash;
     var vCash=addOnEnabled&&addOnSource=='cash'&&i>=addOnYear?cashAfter:initCash;
     var vAdd=addOnEnabled&&i>=addOnYear?addOnAmt*Math.pow(1+rate670/100,i-addOnYear):0;
-    chartData.push({year:i, v2X:Math.round(v2X), vAdd:Math.round(vAdd), v662:Math.round(v662), vBond:Math.round(vBond), vCash:Math.round(vCash), total:Math.round(v2X+vAdd+v662+vBond+vCash)});
+    chartData.push({year:i, v2X:Math.round(v2X), vAdd:Math.round(vAdd), v1X:Math.round(v1X), vBond:Math.round(vBond), vCash:Math.round(vCash), total:Math.round(v2X+vAdd+v1X+vBond+vCash)});
   }
   drawChart(chartData, totalAssets, addOnEnabled, addOnSource, addOnAmt, addOnYear);
 
@@ -607,17 +629,17 @@ function update(){
   var cards=[
     {label:'五年後（含加碼）',val:fmt(five.total),sub:'+'+fmt(five.total-totalAssets),color:'#81d4fa',detail:'複利滾動中'},
     {label:'十年後（含加碼）',val:fmt(final.total),sub:'+'+fmt(final.total-totalCost),color:'#ce93d8',detail:'長期複利成效'},
-    {label:'組合 Beta',val:beta,sub:beta>1.2?'積極型':'穩健型',color:'#a5d6a7',detail:'正2部位×1.9＋00662×1.0＋00865B×0.05'}
+    {label:'組合 Beta',val:beta,sub:beta>1.2?'積極型':'穩健型',color:'#a5d6a7',detail:'正2部位×1.9＋原股部位×1.0＋00865B×0.05'}
   ];
   var rc=g('resultCards'); rc.innerHTML='';
   cards.forEach(function(c){
     rc.innerHTML+='<div class="stat-card" style="background:'+c.color+'11;border:1px solid '+c.color+'33"><div class="stat-label">'+c.label+'</div><div class="stat-val">'+c.val+'</div><div class="stat-sub">'+c.sub+'</div><div class="stat-detail">'+c.detail+'</div></div>';
   });
 
-  var stockExp=etf670Val+etf631Val+etf662Val+etfBondVal; var stockExpPct=(stockExp/totalAssets*100).toFixed(1);
+  var stockExp=etf670Val+etf631Val+etf662Val+etf50Val+etfBondVal; var stockExpPct=(stockExp/totalAssets*100).toFixed(1);
 
   var eb=g('expBar'); eb.innerHTML='';
-  var expActiveArr = [[parseFloat(r670Pct),'#4fc3f7'],[parseFloat(r631Pct),'#00e676'],[parseFloat(r662Pct),'#5c6bc0'],[parseFloat(rBondPct),'#a5d6a7'],[parseFloat(rCashPct),'#ffd54f']].filter(function(x){return x[0]>0;});
+  var expActiveArr = [[parseFloat(r670Pct),'#4fc3f7'],[parseFloat(r662Pct),'#5c6bc0'],[parseFloat(r631Pct),'#00e676'],[parseFloat(r50Pct),'#e91e63'],[parseFloat(rBondPct),'#a5d6a7'],[parseFloat(rCashPct),'#ffd54f']].filter(function(x){return x[0]>0;});
   expActiveArr.forEach(function(x,i){
     var d = document.createElement('div'); d.style.flex=x[0]; d.style.background=x[1];
     if(i===0) d.style.borderRadius='6px 0 0 6px';
@@ -628,12 +650,13 @@ function update(){
   var ec=g('expCards'); ec.innerHTML='';
   [
     ['00670L',r670Pct,etf670Val,'#4fc3f7'],
-    ['00631L',r631Pct,etf631Val,'#00e676'],
     ['00662',r662Pct,etf662Val,'#5c6bc0'],
+    ['00631L',r631Pct,etf631Val,'#00e676'],
+    ['0050',r50Pct,etf50Val,'#e91e63'],
     ['00865B',rBondPct,etfBondVal,'#a5d6a7'],
     ['現金',rCashPct,cash,'#ffd54f']
   ].forEach(function(x){
-    ec.innerHTML+='<div class="stat-card" style="background:'+x[3]+'11;border:1px solid '+x[3]+'33"><div class="stat-label">'+x[0]+'</div><div style="font-size:16px;font-weight:800;color:'+x[3]+'">'+x[1].toFixed(1)+'%</div><div style="font-size:9px;color:#546e7a">'+fmt(x[2])+'</div></div>';
+    ec.innerHTML+='<div class="stat-card" style="background:'+x[3]+'11;border:1px solid '+x[3]+'33"><div class="stat-label">'+x[0]+'</div><div style="font-size:15px;font-weight:800;color:'+x[3]+'">'+x[1].toFixed(1)+'%</div><div style="font-size:9px;color:#546e7a">'+fmt(x[2])+'</div></div>';
   });
 
   var combinedDefenseVal = etfBondVal + cash;
@@ -653,7 +676,7 @@ function update(){
 
   var lc=g('lossCards'); lc.innerHTML='';
   [{label:'市場大跌 -20%',drop:0.20},{label:'市場大跌 -30%',drop:0.30},{label:'黑天鵝跌 -50%',drop:0.50}].forEach(function(s){
-    var loss2X=(etf670Val+etf631Val)*s.drop*1.9, loss662=etf662Val*s.drop*1.0, lossBond=etfBondVal*s.drop*0.05; var total=loss2X+loss662+lossBond; var pct=(total/totalAssets*100).toFixed(1);
+    var loss2X=(etf670Val+etf631Val)*s.drop*1.9, loss1X=(etf662Val+etf50Val)*s.drop*1.0, lossBond=etfBondVal*s.drop*0.05; var total=loss2X+loss1X+lossBond; var pct=(total/totalAssets*100).toFixed(1);
     lc.innerHTML+='<div class="stat-card" style="background:rgba(239,83,80,0.08);border:1px solid rgba(239,83,80,0.2)"><div style="font-size:10px;color:#ef9a9a;font-weight:700;margin-bottom:4px">'+s.label+'</div><div style="font-size:16px;font-weight:800;color:#fff">-'+fmt(total)+'</div><div style="font-size:10px;color:#ef5350;margin:2px 0">-'+pct+'%</div></div>';
   });
 }
@@ -701,7 +724,7 @@ function drawChart(data, totalAssets, addOnEnabled, addOnSource, addOnAmt, addOn
     ctx.fillText('第'+i+'年', xPos(i), canvas.height - 6);
   }
   
-  var layers=[{key:'v2X',color:'#4fc3f7'},{key:'vAdd',color:'#ff9800'},{key:'v662',color:'#5c6bc0'},{key:'vBond',color:'#a5d6a7'},{key:'vCash',color:'#ffd54f'}];
+  var layers=[{key:'v2X',color:'#4fc3f7'},{key:'vAdd',color:'#ff9800'},{key:'v1X',color:'#5c6bc0'},{key:'vBond',color:'#a5d6a7'},{key:'vCash',color:'#ffd54f'}];
   layers.forEach(function(layer){
     ctx.beginPath();
     data.forEach(function(d,i){
@@ -756,8 +779,9 @@ function drawChart(data, totalAssets, addOnEnabled, addOnSource, addOnAmt, addOn
 }
 
 function fetchPrice670(){ fetchPriceSilent('00670L.TW','price670','price670val','p670time','btn670').then(update); }
-function fetchPrice631(){ fetchPriceSilent('00631L.TW','price631','price631val','p631time','btn631').then(update); }
 function fetchPrice00662(){ fetchPriceSilent('00662.TWO','price00662','price662val','p662time','btn662').then(update); }
+function fetchPrice631(){ fetchPriceSilent('00631L.TW','price631','price631val','p631time','btn631').then(update); }
+function fetchPrice0050(){ fetchPriceSilent('0050.TW','price0050','price50val','p50time','btn50').then(update); }
 function fetchPriceBond(){ fetchPriceSilent('00865B.TW','priceBond','priceBondval','p865time','btn865').then(update); }
 
 function showMsg(id, text, ms){ var el=g(id); if(el) el.textContent=text; setTimeout(function(){ if(g(id)) g(id).textContent=''; }, ms||3000); }
@@ -816,7 +840,7 @@ async function loadFromCloud() {
 
 function getSettings(){
   return {
-    shares:val('shares'), price670:price670val, shares631:val('shares631'), price631:price631val, shares00662:val('shares00662'), price00662:price662val, sharesBond:val('sharesBond'), priceBond:priceBondval,
+    shares:val('shares'), price670:price670val, shares00662:val('shares00662'), price00662:price662val, shares631:val('shares631'), price631:price631val, shares0050:val('shares0050'), price0050:price50val, sharesBond:val('sharesBond'), priceBond:priceBondval,
     cash:val('cash'), rate670:val('rate670'), rate662:val('rate662'), rateBond:val('rateBond'), pct670:val('pct670'), pct662:val('pct662'), pctBond:val('pctBond'),
     addOnEnabled:addOnEnabled, addOnSource:addOnSource, addOnAmt:val('addOnAmt'), addOnDrop:val('addOnDrop'), addOnYear:val('addOnYear'),
     loanAmount:val('loanAmount'), loanRate:parseFloat(g('loanRate').value)||2.2, loanStart:g('loanStart').value, loanTotalMonths:val('loanTotalMonths')||240,
@@ -827,10 +851,12 @@ function applySettings(s){
   if(!s) return;
   if(s.shares!=null) g('shares').value=s.shares;
   if(s.price670!=null){ price670val=s.price670; g('price670').value=s.price670; }
-  if(s.shares631!=null) g('shares631').value=s.shares631;
-  if(s.price631!=null){ price631val=s.price631; g('price631').value=s.price631; }
   if(s.shares00662!=null) g('shares00662').value=s.shares00662;
   if(s.price00662!=null){ price662val=s.price00662; g('price00662').value=s.price00662; }
+  if(s.shares631!=null) g('shares631').value=s.shares631;
+  if(s.price631!=null){ price631val=s.price631; g('price631').value=s.price631; }
+  if(s.shares0050!=null) g('shares0050').value=s.shares0050;
+  if(s.price0050!=null){ price50val=s.price0050; g('price0050').value=s.price0050; }
   if(s.sharesBond!=null) g('sharesBond').value=s.sharesBond;
   if(s.priceBond!=null){ priceBondval=s.priceBond; g('priceBond').value=s.priceBond; }
   if(s.cash!=null) g('cash').value=s.cash;
