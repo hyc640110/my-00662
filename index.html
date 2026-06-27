@@ -122,7 +122,7 @@ canvas{display:block;width:100%;border-radius:6px}
     <div>
       <label>00631L 股價 <span id="p631time" style="color:#4caf50;font-size:9px"></span></label>
       <div class="price-row">
-        <input type="text" id="price631" value="35.3" onblur="applyPrice('price631','price631val')" style="color:#00e676">
+        <input type="text" id="price631" value="38.0" onblur="applyPrice('price631','price631val')" style="color:#00e676">
         <button class="refresh-btn" id="btn631" style="background:rgba(0,230,118,0.2);border-color:rgba(0,230,118,0.4);color:#00e676" onclick="fetchPrice631()" title="更新股價">🔄</button>
       </div>
       <div class="info-row">市值 <span id="val631" style="color:#00e676">-</span></div>
@@ -138,7 +138,7 @@ canvas{display:block;width:100%;border-radius:6px}
     <div>
       <label>0050 股價 <span id="p50time" style="color:#4caf50;font-size:9px"></span></label>
       <div class="price-row">
-        <input type="text" id="price0050" value="150.0" onblur="applyPrice('price0050','price50val')" style="color:#e91e63">
+        <input type="text" id="price0050" value="110.0" onblur="applyPrice('price0050','price50val')" style="color:#e91e63">
         <button class="refresh-btn" id="btn50" style="background:rgba(233,30,99,0.2);border-color:rgba(233,30,99,0.4);color:#e91e63" onclick="fetchPrice0050()" title="更新股價">🔄</button>
       </div>
       <div class="info-row">市值 <span id="val0050" style="color:#e91e63">-</span></div>
@@ -375,11 +375,11 @@ canvas{display:block;width:100%;border-radius:6px}
 <p class="footer">🚀 雲端自動版：登入或開啟網頁時會全自動更新最新股價並上傳。</p>
 
 <script>
-var STORAGE_KEY='portfolio-tech-v6';
+var STORAGE_KEY='portfolio-tech-v7';
 var CONF_KEY='portfolio-sync-conf-tech';
 var addOnEnabled=true;
 var addOnSource='cash';
-var price670val=230.0, price662val=125.0, price631val=35.26, price50val=150.0, priceBondval=48.15;
+var price670val=230.0, price662val=125.0, price631val=38.16, price50val=103.1, priceBondval=48.15;
 var isCloudSyncing=false;
 
 function fmt(v){
@@ -406,37 +406,30 @@ async function autoRefreshAllPrices() {
 
 async function fetchPriceSilent(ticker, inputId, varName, timeId, btnId) {
   var btn = g(btnId); if(btn) btn.textContent = '⏳';
-  try {
-    var res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + ticker)}`);
-    if (!res.ok) throw new Error();
-    var wrapper = await res.json();
-    var json = JSON.parse(wrapper.contents);
-    var price = json.chart.result[0].meta.regularMarketPrice;
-    if (price) {
-      g(inputId).value = price;
-      if (varName === 'price670val') price670val = price; 
-      else if (varName === 'price662val') price662val = price;
-      else if (varName === 'price631val') price631val = price;
-      else if (varName === 'price50val') price50val = price;
-      else priceBondval = price;
-      var now = new Date(); g(timeId).textContent = '● ' + now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + ' 更新';
-    }
-  } catch (e) {
+  // 建立代理陣列進行多重防禦分流，解決網址截斷問題
+  var urls = [
+    `https://api.allorigins.win/get?url=${encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + ticker)}`,
+    `https://api.allorigins.win/get?url=${encodeURIComponent('https://query2.finance.yahoo.com/v8/finance/chart/' + ticker)}`
+  ];
+  
+  for(var i=0; i<urls.length; i++) {
     try {
-      var resAlt = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://query2.finance.yahoo.com/v8/finance/chart/' + ticker)}`);
-      var wrapperAlt = await resAlt.json();
-      var jsonAlt = JSON.parse(wrapperAlt.contents);
-      var priceAlt = jsonAlt.chart.result[0].meta.regularMarketPrice;
-      if (priceAlt) {
-        g(inputId).value = priceAlt;
-        if (varName === 'price670val') price670val = priceAlt;
-        else if (varName === 'price662val') price662val = priceAlt;
-        else if (varName === 'price631val') price631val = priceAlt;
-        else if (varName === 'price50val') price50val = priceAlt;
-        else priceBondval = priceAlt;
+      var res = await fetch(urls[i]);
+      if (!res.ok) continue;
+      var wrapper = await res.json();
+      var json = (typeof wrapper.contents === 'string') ? JSON.parse(wrapper.contents) : wrapper.contents;
+      var price = json.chart.result[0].meta.regularMarketPrice;
+      if (price) {
+        g(inputId).value = price;
+        if (varName === 'price670val') price670val = price; 
+        else if (varName === 'price662val') price662val = price;
+        else if (varName === 'price631val') price631val = price;
+        else if (varName === 'price50val') price50val = price;
+        else priceBondval = price;
         var now = new Date(); g(timeId).textContent = '● ' + now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + ' 更新';
+        break; // 成功抓到隨即跳出
       }
-    } catch(err) {}
+    } catch (e) {}
   }
   if(btn) btn.textContent = '🔄';
 }
