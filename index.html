@@ -41,7 +41,7 @@ input[type=range]{width:100%;accent-color:#4fc3f7;cursor:pointer}
 .refresh-btn{background:rgba(79,195,247,0.2);border:1px solid rgba(79,195,247,0.4);border-radius:8px;padding:6px 10px;color:#4fc3f7;cursor:pointer;font-size:16px;flex-shrink:0}
 .chart-wrap{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px 8px;max-width:640px;margin:0 auto 12px}
 canvas{display:block;width:100%;border-radius:6px}
-.legend{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.legend">display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px</div>
 .legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:#90a4ae}
 .legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 .legend-dot-dash{width:16px;height:0;border-top:2px dashed #ef9a9a;flex-shrink:0;margin-top:4px}
@@ -342,7 +342,7 @@ canvas{display:block;width:100%;border-radius:6px}
 <p class="footer">🚀 雲端自動版：登入或開啟網頁時會全自動更新最新股價並上傳。</p>
 
 <script>
-var STORAGE_KEY='portfolio-tech-v3';
+var STORAGE_KEY='portfolio-tech-v4';
 var CONF_KEY='portfolio-sync-conf-tech';
 var addOnEnabled=true;
 var addOnSource='cash';
@@ -361,7 +361,7 @@ async function autoRefreshAllPrices() {
   try {
     await Promise.all([
       fetchPriceSilent('00670L.TW', 'price670', 'price670val', 'p670time', 'btn670'),
-      fetchPriceSilent('00662.TW', 'price00662', 'price662val', 'p662time', 'btn662'),
+      fetchPriceSilent('00662.TWO', 'price00662', 'price662val', 'p662time', 'btn662'),
       fetchPriceSilent('00865B.TW', 'priceBond', 'priceBondval', 'p865time', 'btn865')
     ]);
   } catch(e) {}
@@ -733,7 +733,7 @@ function drawChart(data, totalAssets, addOnEnabled, addOnSource, addOnAmt, addOn
 }
 
 function fetchPrice670(){ fetchPriceSilent('00670L.TW','price670','price670val','p670time','btn670').then(update); }
-function fetchPrice00662(){ fetchPriceSilent('00662.TW','price00662','price662val','p662time','btn662').then(update); }
+function fetchPrice00662(){ fetchPriceSilent('00662.TWO','price00662','price662val','p662time','btn662').then(update); }
 function fetchPriceBond(){ fetchPriceSilent('00865B.TW','priceBond','priceBondval','p865time','btn865').then(update); }
 
 function showMsg(id, text, ms){ var el=g(id); if(el) el.textContent=text; setTimeout(function(){ if(g(id)) g(id).textContent=''; }, ms||3000); }
