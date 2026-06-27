@@ -122,7 +122,7 @@ canvas{display:block;width:100%;border-radius:6px}
     <div>
       <label>00631L 股價 <span id="p631time" style="color:#4caf50;font-size:9px"></span></label>
       <div class="price-row">
-        <input type="text" id="price631" value="210.0" onblur="applyPrice('price631','price631val')" style="color:#00e676">
+        <input type="text" id="price631" value="35.3" onblur="applyPrice('price631','price631val')" style="color:#00e676">
         <button class="refresh-btn" id="btn631" style="background:rgba(0,230,118,0.2);border-color:rgba(0,230,118,0.4);color:#00e676" onclick="fetchPrice631()" title="更新股價">🔄</button>
       </div>
       <div class="info-row">市值 <span id="val631" style="color:#00e676">-</span></div>
@@ -284,7 +284,7 @@ canvas{display:block;width:100%;border-radius:6px}
       </div>
       <div class="slider-row">
         <div class="slider-label">
-          <span style="font-size:11px;color:#a5d6a7;font-weight:600">00865B 美債比重</span>
+          <span style="font-size:11px;color:#a5d6a7;font-weight:600">00865B 美債</span>
           <span id="pctBondLabel" class="slider-val" style="background:rgba(165,214,167,0.15);border:1px solid rgba(165,214,167,0.4);color:#a5d6a7">20%</span>
         </div>
         <input type="range" id="pctBond" min="0" max="40" step="5" value="20" oninput="updateSlider('pctBond')">
@@ -375,11 +375,11 @@ canvas{display:block;width:100%;border-radius:6px}
 <p class="footer">🚀 雲端自動版：登入或開啟網頁時會全自動更新最新股價並上傳。</p>
 
 <script>
-var STORAGE_KEY='portfolio-tech-v5';
+var STORAGE_KEY='portfolio-tech-v6';
 var CONF_KEY='portfolio-sync-conf-tech';
 var addOnEnabled=true;
 var addOnSource='cash';
-var price670val=230.0, price662val=125.0, price631val=210.0, price50val=150.0, priceBondval=48.15;
+var price670val=230.0, price662val=125.0, price631val=35.26, price50val=150.0, priceBondval=48.15;
 var isCloudSyncing=false;
 
 function fmt(v){
@@ -395,7 +395,7 @@ async function autoRefreshAllPrices() {
     await Promise.all([
       fetchPriceSilent('00670L.TW', 'price670', 'price670val', 'p670time', 'btn670'),
       fetchPriceSilent('00662.TWO', 'price00662', 'price662val', 'p662time', 'btn662'),
-      fetchPriceSilent('00631L.TW', 'price631', 'price631val', 'p631time', 'btn631'),
+      fetchPriceSilent('00631L.TWO', 'price631', 'price631val', 'p631time', 'btn631'),
       fetchPriceSilent('0050.TW', 'price0050', 'price50val', 'p50time', 'btn50'),
       fetchPriceSilent('00865B.TW', 'priceBond', 'priceBondval', 'p865time', 'btn865')
     ]);
@@ -780,7 +780,7 @@ function drawChart(data, totalAssets, addOnEnabled, addOnSource, addOnAmt, addOn
 
 function fetchPrice670(){ fetchPriceSilent('00670L.TW','price670','price670val','p670time','btn670').then(update); }
 function fetchPrice00662(){ fetchPriceSilent('00662.TWO','price00662','price662val','p662time','btn662').then(update); }
-function fetchPrice631(){ fetchPriceSilent('00631L.TW','price631','price631val','p631time','btn631').then(update); }
+function fetchPrice631(){ fetchPriceSilent('00631L.TWO','price631','price631val','p631time','btn631').then(update); }
 function fetchPrice0050(){ fetchPriceSilent('0050.TW','price0050','price50val','p50time','btn50').then(update); }
 function fetchPriceBond(){ fetchPriceSilent('00865B.TW','priceBond','priceBondval','p865time','btn865').then(update); }
 
